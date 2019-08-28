@@ -5,6 +5,7 @@ namespace Collective\Annotations\Routing\Annotations;
 use Collective\Annotations\AnnotationScanner;
 use Doctrine\Common\Annotations\AnnotationRegistry;
 use Doctrine\Common\Annotations\SimpleAnnotationReader;
+use Illuminate\Support\Facades\Route;
 use ReflectionClass;
 use Symfony\Component\Finder\Finder;
 
@@ -34,6 +35,11 @@ class Scanner extends AnnotationScanner
     public function getRouteDefinitions()
     {
         $output = '';
+
+        /**
+         * get the global where patterns
+         */
+        $patterns = Route::getPatterns();
 
         foreach ($this->getEndpointsInClasses($this->getReader()) as $endpoint) {
             $output .= $endpoint->toRouteDefinition().PHP_EOL.PHP_EOL;

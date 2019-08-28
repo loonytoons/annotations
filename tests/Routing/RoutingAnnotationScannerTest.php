@@ -58,6 +58,32 @@ class RoutingAnnotationScannerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals(include __DIR__ . '/results/route-detail-where.php', $routeDetail);
     }
 
+    public function testPatternsAnnotation()
+    {
+        require_once __DIR__.'/fixtures/annotations/PatternsController.php';
+
+        /**
+         * setup route patterns
+         */
+
+        $scanner = $this->makeScanner(['App\Http\Controllers\PatternsController']);
+
+        $definition = $scanner->getRouteDefinitions();
+        $this->assertEquals(trim(file_get_contents(__DIR__.'/results/annotation-pattern.php')), $definition);
+    }
+
+    public function testPatternsAnnotationDetail()
+    {
+        require_once __DIR__.'/fixtures/annotations/PatternsController.php';
+        /**
+         * setup route patterns
+         */
+        $scanner = $this->makeScanner(['App\Http\Controllers\WhereController']);
+
+        $routeDetail = $scanner->getRouteDefinitionsDetail();
+        $this->assertEquals(include __DIR__ . '/results/route-detail-pattern.php', $routeDetail);
+    }
+
     /**
      * Construct a route annotation scanner.
      *
